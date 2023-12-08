@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Author: {{ author_name }}</title>
+    <style>
+        h1 {
+            color: yellowgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Author:</h1>
+    <p style="font-size: 25px;"><b>{{ author_name }}</b></p>
+
+    <ul>
+        {% for list in whole_list %}
+            <li>
+                <b>Article title: </b>{{ list.1 }}
+                <br><b>Year: </b>{{ list.2 }}
+                <br><b>Link: </b><a href="{{ list.3 }}">{{list.3}}</a>
+                <br><b>Journal: </b><a href="{% url 'journal_detail' journal_name=list.4 %}">{{ list.4 }}</a>
+
+                <!-- JavaScript -->
+                <div id="output-{{ forloop.counter }}"><b>Author: </b></div>
+                <script>
+                    var str = "{{ list.5 }}";
+                    var authors = str.split(', ');
+
+                    // Show the result in html
+                    var outputDiv = document.getElementById('output-{{ forloop.counter }}');
+                    authors.forEach(function(author) {
+                        var encodedAuthor = author.trim().replace(/'/g, "%27");// Match what we did in the views.py
+                        var url = '/inf553/author:' + encodedAuthor;
+                        var link = '<a href="' + url + '">' + author.trim() + '</a>';// What it shows is with '
+                        outputDiv.innerHTML += link + ", ";
+                    });
+                </script>
+                <b>Grant info: </b>{{ list.6 }}
+                <br><b>Conflict of Interest: </b>{{ list.7 }}
+            </li><br>
+        {% endfor %}
+        <b><a href="{% url 'journal' %}">Back to start page</a></b>
+    </ul>
+
+</body>
+
+</html>

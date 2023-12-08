@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Journal: {{ journal_name }}</title>
+    <style>
+        h1 {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Journal:</h1>
+    <p style="font-size: 25px;"><b>{{ journal_name }}</b></p>
+
+    <ul>
+        {% for author in authors %}
+            <li><a href="{% url 'author' author_name=author.0 %}">{{ author.1 }}</a></li>
+        {% endfor %}
+        <br><b><a href="{% url 'journal' %}">Back to start page</a></b>
+    </ul>
+
+
+</body>
+</html>
